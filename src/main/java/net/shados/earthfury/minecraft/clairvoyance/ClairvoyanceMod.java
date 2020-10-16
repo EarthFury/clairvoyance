@@ -111,13 +111,11 @@ public class ClairvoyanceMod {
 				final LivingEntity ent = (LivingEntity) entity;
 				final boolean isBlind = ent.isPotionActive(Effects.BLINDNESS);
 				final boolean isBlindnessFogEnabled = ClairvoyanceConfig.CLIENT_CONFIG.isBlindnessFogEnabled.get();
-				// We disable the fog, as it's disabled and we're blind
-				// We're not blind, do nothing, this doesn't involve us at all.
 				if(isBlindnessFogEnabled && isBlind) {
+					// The fog is enabled and we're blind: It should display the fog normally, so we exit early
 					return;
 				} else {
-					// The fog is enabled and we're blind: It should display the fog normally, so we exit early
-					// Otherwise, we're not blind! Don't do anything.
+					// We're blind and the fog is disabled: Skip rendering it! Otherwise, we're not blind. Do nothing.
 					skipForBlindness = isBlind;
 				}
 			} else {
