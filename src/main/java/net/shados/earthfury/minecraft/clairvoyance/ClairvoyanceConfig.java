@@ -102,6 +102,11 @@ public class ClairvoyanceConfig {
 		 */
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> distanceFogDimensionList;
 
+		/**
+		 * If blindness fog should be displayed; Note that when disabled, it will disable all fog always when blind
+		 */
+		public final ForgeConfigSpec.BooleanValue isBlindnessFogEnabled;
+
 		public ClientConfig(ForgeConfigSpec.Builder builder) {
 			distanceFogVisibilityMode = builder
 					.comment("The visibility mode of distance fog")
@@ -111,6 +116,10 @@ public class ClairvoyanceConfig {
 					.comment("The list of dimension names to which distanceFogVisibilityMode applies to")
 					.translation(ClairvoyanceMod.MODID + ".config." + "distanceFogDimensionList")
 					.defineList("distanceFogDimensionList", new ArrayList<>(), o -> true);
+			isBlindnessFogEnabled = builder
+					.comment("Should blindness fog be enabled (true), or fog totally disabled when blind? (false)")
+					.translation(ClairvoyanceMod.MODID + ".config." + "isBlindnessFogEnabled")
+					.define("isBlindnessFogEnabled", true);
 		}
 	}
 }

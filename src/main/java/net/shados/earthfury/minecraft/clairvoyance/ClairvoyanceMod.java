@@ -19,6 +19,8 @@ package net.shados.earthfury.minecraft.clairvoyance;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -68,6 +70,7 @@ public class ClairvoyanceMod {
 			}
 
 			// Fail early if our config is just borked to hell somehow by referencing it in init.
+			LOGGER.info("CLIENT_CONFIG.isBlindnessFogEnabled set to " + ClairvoyanceConfig.CLIENT_CONFIG.isBlindnessFogEnabled.get().toString());
 			LOGGER.info("CLIENT_CONFIG.distanceFogVisibilityMode mode set to " + ClairvoyanceConfig.CLIENT_CONFIG.distanceFogVisibilityMode.get().toString());
 			LOGGER.info("Validating CLIENT_CONFIG.distanceFogDimensionList ...");
 			for(String dimension : ClairvoyanceConfig.CLIENT_CONFIG.distanceFogDimensionList.get()) {
@@ -101,8 +104,29 @@ public class ClairvoyanceMod {
 				return;
 			}
 
+			final boolean skipForDistanceFog = !ClairvoyanceConfig.CLIENT_CONFIG.distanceFogVisibilityMode.get().isVisibleFor(currentDimension);
+
+			final boolean skipForBlindness;
+			if(entity instanceof LivingEntity) {
+				final LivingEntity ent = (LivingEntity) entity;
+				final boolean isBlind = ent.isPotionActive(Effects.BLINDNESS);
+				final boolean isBlindnessFogEnabled = ClairvoyanceConfig.CLIENT_CONFIG.isBlindnessFogEnabled.get();
+				// We disable the fog, as it's disabled and we're blind
+				// We're not blind, do nothing, this doesn't involve us at all.
+				if(isBlindnessFogEnabled && isBlind) {
+					return;
+				} else {
+					// The fog is enabled and we're blind: It should display the fog normally, so we exit early
+					// Otherwise, we're not blind! Don't do anything.
+					skipForBlindness = isBlind;
+				}
+			} else {
+				// We can't be blind, do nothing
+				skipForBlindness = false;
+			}
+
 			// Skip rendering fog by zeroing the density and cancelling the event if we should
-			if(!ClairvoyanceConfig.CLIENT_CONFIG.distanceFogVisibilityMode.get().isVisibleFor(currentDimension)) {
+			if(skipForBlindness || skipForDistanceFog) {
 				event.setDensity(0.0F);
 				event.setCanceled(true);
 			}

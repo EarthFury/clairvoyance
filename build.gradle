@@ -32,7 +32,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.1'
-group = 'net.shados.earthfury.minecraft.removefog' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'net.shados.earthfury.minecraft.clairvoyance' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'clairvoyance'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -94,7 +94,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'clairvoyance', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 examplemod {
