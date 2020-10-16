@@ -108,7 +108,7 @@ public class ClairvoyanceConfig {
 					.translation(ClairvoyanceMod.MODID + ".config." + "fogVisibility")
 					.defineEnum("distanceFogVisibilityMode", DistanceFogVisibilityMode.ENABLED);
 			distanceFogDimensionList = builder
-					.comment("The list of dimension IDs to which distanceFogVisibilityMode applies to")
+					.comment("The list of dimension names to which distanceFogVisibilityMode applies to")
 					.translation(ClairvoyanceMod.MODID + ".config." + "distanceFogDimensionList")
 					.defineList("distanceFogDimensionList", new ArrayList<>(), o -> true);
 		}
