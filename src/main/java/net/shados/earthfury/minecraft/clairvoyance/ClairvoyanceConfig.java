@@ -24,6 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +49,11 @@ public class ClairvoyanceConfig {
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LogManager.getLogger(ClairvoyanceMod.MODID);
+
+	/**
+	 * A default list of dimensions, used mostly as a suggestion
+	 */
+	private static final String[] DEFAULT_DISTANCE_FOG_DIMENSIONS = {"atum:atum"};
 
 	// Static initialization for CLIENT_CONFIG & _SPEC
 	static {
@@ -115,7 +121,7 @@ public class ClairvoyanceConfig {
 			distanceFogDimensionList = builder
 					.comment("The list of dimension names to which distanceFogVisibilityMode applies to")
 					.translation(ClairvoyanceMod.MODID + ".config." + "distanceFogDimensionList")
-					.defineList("distanceFogDimensionList", new ArrayList<>(), o -> true);
+					.defineList("distanceFogDimensionList", Arrays.asList(DEFAULT_DISTANCE_FOG_DIMENSIONS), o -> true);
 			isBlindnessFogEnabled = builder
 					.comment("Should blindness fog be enabled (true), or fog totally disabled when blind? (false)")
 					.translation(ClairvoyanceMod.MODID + ".config." + "isBlindnessFogEnabled")
