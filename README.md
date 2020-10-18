@@ -48,6 +48,7 @@ A simple Minecraft mod for changing distance fog visibility
 
 1. Download the mod archive
 2. Place it in your Forge `mods/` directory
+3. Configure using the Forge config system file `config/clairvoyance-client.toml`
 
 ## Roadmap
 
